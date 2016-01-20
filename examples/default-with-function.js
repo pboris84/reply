@@ -10,8 +10,8 @@ function get_timezone() {
 }
 
 var opts = {
-  country: {
-    message: 'What country do you live in?'
+  fingers: {
+    message: 'How many fingers do you have?'
   },
   timezone: {
     message: 'And your current timezone is?',

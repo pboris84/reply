@@ -6,24 +6,24 @@ var bye = function(){
 
 var get_input = function(){
 
-	reply.confirm('Do you want to do this now?', function(err, yes){
+	reply.confirm('Hi, i\'m a robot that memorizes your email and password, will you teach me yours?', function(err, yes){
 
 	  if (!err && yes)
-	    console.log("Then let's get on with it!");
+	    console.log("Alright, let\'s learn");
 	  else
-	    return console.log("Boo. Maybe next time.");
+	    return console.log("ok, shutting down.");
 
-		reply.get({ email: 'email@mailbox.com', password: { type: 'password'} }, function(err, result){
+		reply.get({ email: 'type out your email', password: { type: 'password'} }, function(err, result){
 
 			if (err) return bye();
 			console.log(result);
 
-			reply.confirm('Is this information OK?', function(err, yes){
+			reply.confirm('I memorized it! Is this right:', function(err, yes){
 
 					if (err || !yes)
 						get_input();
 					else
-						console.log("Great, thanks.")
+						console.log("Awesome! shutting down!")
 
 			})
 

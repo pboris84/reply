@@ -1,33 +1,33 @@
 {
   "name": {
-  	"message": "Please type in your name."
+  	"message": "What's your name?"
   },
   "age": {
-    "message": "How many springs?",
+    "message": "What's 2 + 3?",
     "type": "number",
     "options": [1,2,3,4,5]
   },
   "rockstar": {
     "type": "confirm",
-    "message": "Are you a rockstar?",
+    "message": "Have you been to Spain?",
     "default": "yes"
   },
   "password": {
     "type": "password",
-    "message": "This is just to show reply's silent output."
+    "message": "Note how the next words are starred out"
   },
   "gender": {
-    "message": "What are you? You can skip this one if you want.",
+    "message": "Are you male or female?",
     "options": ["male", "female"],
     "allow_empty": true
   },
   "married": {
-    "message": "Have you taken the big step?",
+    "message": "true or false: You are an alien.",
     "type": "boolean",
     "default": false
   },
   "occupation": {
-    "message": "What do you do for a living?",
-    "default": "coder"
+    "message": "What's your favorite means of transport?",
+    "default": "horse and covered wagon"
   }
 }

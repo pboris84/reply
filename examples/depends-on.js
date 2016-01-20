@@ -1,7 +1,7 @@
 var reply = require('./../');
 
 var bye = function(){
-  console.log("Ok, maybe next time.");
+  console.log("Thanks for playing!");
 }
 
 function get_timezone() {
@@ -10,35 +10,35 @@ function get_timezone() {
 }
 
 var opts = {
-  planet: {
-    message: 'What planet are you on?',
-    options: ['Earth', 'Mars', 'Jupiter', 'Venus', 'Saturn']
+  ice_cream: {
+    message: 'My favorite ice cream is chocolate, what\'s your favorite ice cream?',
+    options: ['Chocolate', 'Vanilla', 'Mint Chocolate', 'Strawberry', 'ice cream sucks']
   },
-  not_earth_question: {
-    message: 'REALLY? How are you connected to the Internet?',
+    no_ice_cream: {
+    message: 'Hmm, I guess we can\'t be friends',
     depends_on: {
-      planet: { not: 'Earth' }
-    }
+      ice_cream: { not: 'Chocolate' }  
+    },
   },
   first_question: {
-    message: 'Guess the right number. Five options.',
-    options: [1,2,3,4,5]
+    message: 'what\'s the square root of 36?',
+    options: [1,2,3,4,5,6]
   },
   second_question: {
-    message: 'Well done! Now give me the value of pi up to the 8th digit.',
+    message: 'Nice!, Now what\'s the capitol of Russia?',
     // regex: /3.14159265/,
     depends_on: {
-      first_question: 4,
+      first_question: 6,
     }
   },
   you_win: {
-    message: 'Impressive. Type your name to enter the Hall of Fame.',
+    message: 'You did it, YOU WIN!',
     depends_on: {
-      second_question: 3.14159265,
+      second_question: 'Moscow',
     }
   },
   try_again: {
-    message: 'Game over mister. Do you want to start again?',
+    message: 'Try again?',
     type: 'boolean',
     default: true
   }

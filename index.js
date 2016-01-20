@@ -1,5 +1,8 @@
 var rl, readline = require('readline');
 
+
+
+
 var get_interface = function(stdin, stdout) {
   if (!rl) rl = readline.createInterface(stdin, stdout);
   else stdin.resume(); // interface exists

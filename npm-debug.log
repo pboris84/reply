@@ -1,0 +1,94 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'reply' ]
+2 info using npm@3.3.12
+3 info using node@v5.4.1
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readLocalPackageData
+7 silly fetchPackageMetaData reply
+8 silly fetchNamedPackageData reply
+9 silly mapToRegistry name reply
+10 silly mapToRegistry using default registry
+11 silly mapToRegistry registry https://registry.npmjs.org/
+12 silly mapToRegistry uri https://registry.npmjs.org/reply
+13 verbose request uri https://registry.npmjs.org/reply
+14 verbose request no auth needed
+15 info attempt registry request try #1 at 7:26:55 PM
+16 verbose request id 1c404acf37c2eb03
+17 http request GET https://registry.npmjs.org/reply
+18 http 200 https://registry.npmjs.org/reply
+19 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+19 verbose headers   etag: '"BMRONKCNS9A60LLIIHX8CSCFN"',
+19 verbose headers   'content-type': 'application/json',
+19 verbose headers   'cache-control': 'max-age=300',
+19 verbose headers   'content-length': '13281',
+19 verbose headers   'accept-ranges': 'bytes',
+19 verbose headers   date: 'Wed, 20 Jan 2016 03:26:55 GMT',
+19 verbose headers   via: '1.1 varnish',
+19 verbose headers   age: '0',
+19 verbose headers   connection: 'keep-alive',
+19 verbose headers   'x-served-by': 'cache-lax1434-LAX',
+19 verbose headers   'x-cache': 'MISS',
+19 verbose headers   'x-cache-hits': '0',
+19 verbose headers   'x-timer': 'S1453260415.602829,VS0,VE202',
+19 verbose headers   vary: 'Accept' }
+20 silly get cb [ 200,
+20 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+20 silly get     etag: '"BMRONKCNS9A60LLIIHX8CSCFN"',
+20 silly get     'content-type': 'application/json',
+20 silly get     'cache-control': 'max-age=300',
+20 silly get     'content-length': '13281',
+20 silly get     'accept-ranges': 'bytes',
+20 silly get     date: 'Wed, 20 Jan 2016 03:26:55 GMT',
+20 silly get     via: '1.1 varnish',
+20 silly get     age: '0',
+20 silly get     connection: 'keep-alive',
+20 silly get     'x-served-by': 'cache-lax1434-LAX',
+20 silly get     'x-cache': 'MISS',
+20 silly get     'x-cache-hits': '0',
+20 silly get     'x-timer': 'S1453260415.602829,VS0,VE202',
+20 silly get     vary: 'Accept' } ]
+21 verbose get saving reply to /Users/iguest/.npm/registry.npmjs.org/reply/.cache.json
+22 verbose makeDirectory /Users/iguest/.npm creation not in flight; initializing
+23 silly makeDirectory /Users/iguest/.npm uid: 502 gid: 20
+24 silly install normalizeTree
+25 silly loadCurrentTree Finishing
+26 silly loadIdealTree Starting
+27 silly install loadIdealTree
+28 silly cloneCurrentTree Starting
+29 silly install cloneCurrentTreeToIdealTree
+30 silly cloneCurrentTree Finishing
+31 silly loadShrinkwrap Starting
+32 silly install loadShrinkwrap
+33 silly loadShrinkwrap Finishing
+34 silly loadAllDepsIntoIdealTree Starting
+35 silly install loadAllDepsIntoIdealTree
+36 silly rollbackFailedOptional Starting
+37 silly rollbackFailedOptional Finishing
+38 silly runTopLevelLifecycles Starting
+39 silly runTopLevelLifecycles Finishing
+40 silly install printInstalled
+41 verbose stack Error: Refusing to install reply as a dependency of itself
+41 verbose stack     at checkSelf (/usr/local/lib/node_modules/npm/lib/install/validate-args.js:40:14)
+41 verbose stack     at Array.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/slide/lib/bind-actor.js:15:8)
+41 verbose stack     at LOOP (/usr/local/lib/node_modules/npm/node_modules/slide/lib/chain.js:15:14)
+41 verbose stack     at chain (/usr/local/lib/node_modules/npm/node_modules/slide/lib/chain.js:20:5)
+41 verbose stack     at /usr/local/lib/node_modules/npm/lib/install/validate-args.js:15:5
+41 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:52:35
+41 verbose stack     at Array.forEach (native)
+41 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:52:11
+41 verbose stack     at Array.forEach (native)
+41 verbose stack     at asyncMap (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:51:8)
+42 verbose cwd /Users/iguest/reply
+43 error Darwin 15.2.0
+44 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "install" "reply"
+45 error node v5.4.1
+46 error npm  v3.3.12
+47 error code ENOSELF
+48 error Refusing to install reply as a dependency of itself
+49 error If you need help, you may report this error at:
+49 error     <https://github.com/npm/npm/issues>
+50 verbose exit [ 1, true ]

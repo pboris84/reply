@@ -6,6 +6,14 @@ var get_interface = function(stdin, stdout) {
   return rl;
 }
 
+
+
+
+
+
+
+
+
 var confirm = exports.confirm = function(message, callback) {
 
   var question = {
@@ -22,6 +30,16 @@ var confirm = exports.confirm = function(message, callback) {
   });
 
 };
+
+
+
+
+
+
+
+
+
+
 
 var get = exports.get = function(options, callback) {
 

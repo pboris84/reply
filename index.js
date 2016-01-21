@@ -54,18 +54,16 @@ var confirm = exports.confirm = function(message, callback) {
 
 
 /*
-
-FINISH FINISH  FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH
-
+A tool that can get various different things
 @function get
 @param {Object} options - the series of questions or interactions for the user
 @exports the get @module
-@callback waits on user response    FINISH FINISH  FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH
-    @param {String} answer
+@callback waits on user response 
     @param error
 @returns 
     {null} - if no callback occurs
     {error} - if no object in options
+    otherwise it returns the submethod's return value
 */
 var get = exports.get = function(options, callback) {
 
@@ -73,24 +71,25 @@ var get = exports.get = function(options, callback) {
 
   if (typeof options != 'object')
     return callback(new Error("Please pass a valid options object."))
-
+    
+  // builds an array that manages the interaction results  
   var answers = {},
       stdin = process.stdin,
       stdout = process.stdout,
       fields = Object.keys(options);
 
-
-
+  // A tool that ends the get callback 
+  // @function done
   var done = function() {
     close_prompt();
     callback(null, answers);
   }
-  
-  
-  
-  
-  
 
+  
+  
+  // A tool that ends the input interaction from the user
+  // @function close_prompt
+  // @return {null}
   var close_prompt = function() {
     stdin.pause();
     if (!rl) return;
@@ -99,11 +98,11 @@ var get = exports.get = function(options, callback) {
   }
   
   
-  
-  
-  
-  
-
+    
+  // A tool that returns the default set of questions based on a key given by the user
+  // @function get_default 
+  // @param {String} key - the reference key for the default question
+  // @return {Object[]} either the default key, answer key, or just the answer options
   var get_default = function(key, partial_answers) {
     if (typeof options[key] == 'object')
       return typeof options[key].default == 'function' ? options[key].default(partial_answers) : options[key].default;
@@ -111,14 +110,16 @@ var get = exports.get = function(options, callback) {
       return options[key];
   }
   
-  
-  
-  
-  
-  
-  
-  
 
+  
+  // A tool that tells you what type of content the input was
+  // @function guess_type
+  // @param {String} reply - the user input
+  // @return {null} - if there is no input
+  //         {String} - if it matches to expected input or is a string
+  //         {int} - if its proven both the input is a string and
+  //                 int modified input is a string
+  
   var guess_type = function(reply) {
 
     if (reply.trim() == '')
@@ -133,13 +134,15 @@ var get = exports.get = function(options, callback) {
     return reply;
   }
   
-  
-  
-  
-  
-  
-  
 
+  
+  // A tool that verifies if a given input key matches an answer
+  // @function validate
+  // @param {String} key - the user input
+  // @param {String} answer - the answer its compared against
+  // @return {Object[]} - based on where there is a match, isn't
+  //                      a match, or it's undefined.
+  //           {boolean} - if no conditions are met.
   var validate = function(key, answer) {
 
     if (typeof answer == 'undefined')
@@ -157,15 +160,11 @@ var get = exports.get = function(options, callback) {
 
   }
   
-  
-  
-  
-  
-  
-  
-  
-  
 
+  
+  // A tool that shows you the error in your key answer comparison
+  // @function show_error
+  // @param {String} key - the user input
   var show_error = function(key) {
     var str = options[key].error ? options[key].error : 'Invalid value.';
 
@@ -175,15 +174,11 @@ var get = exports.get = function(options, callback) {
     stdout.write("\0x33[31m" + str + "\0x33[0m" + "\n");
   }
   
-  
-  
-  
-  
-  
-  
-  
-  
 
+  
+  // A tool that shows a message
+  // @function show_message
+  // @param {String} key - the user input
   var show_message = function(key) {
     var msg = '';
 
@@ -198,9 +193,6 @@ var get = exports.get = function(options, callback) {
   
   
   
-  
-  
-
   // taken from commander lib
   var wait_for_password = function(prompt, callback) {
 
@@ -234,16 +226,7 @@ var get = exports.get = function(options, callback) {
     stdin.on('keypress', keypress_callback);
   }
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
 
   var check_reply = function(index, curr_key, fallback, reply) {
     var answer = guess_type(reply);
@@ -255,17 +238,7 @@ var get = exports.get = function(options, callback) {
       show_error(curr_key) || next_question(index); // repeats current
   }
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
+ 
   var dependencies_met = function(conds) {
     for (var key in conds) {
       var cond = conds[key];
@@ -284,16 +257,7 @@ var get = exports.get = function(options, callback) {
     return true;
   }
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+ 
   
 
   var next_question = function(index, prev_key, answer) {
@@ -339,15 +303,7 @@ var get = exports.get = function(options, callback) {
 
   }
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
 
   rl = get_interface(stdin, stdout);
   next_question(0);

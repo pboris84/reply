@@ -1,4 +1,3 @@
-
 /*
 Establishes the required tools to interact with the program,
 and sets up that tool to be used elsewhere in the program.
@@ -54,7 +53,9 @@ var confirm = exports.confirm = function(message, callback) {
 
 
 /*
-A tool that can get various different things
+A tool that can get various different things based on what specifics the user needs,
+and that does the majority of the functionality for reply
+
 @function get
 @param {Object} options - the series of questions or interactions for the user
 @exports the get @module
@@ -193,7 +194,12 @@ var get = exports.get = function(options, callback) {
   
   
   
-  // taken from commander lib
+  // a tool that waits for a password, and masks it with *'s as the
+  // user types it out
+  // @function wait_for_password
+  // @param {String} prompt - the user password
+  // @callback {String} - waits for user response
+  // @return {Callback(String)}
   var wait_for_password = function(prompt, callback) {
 
     var buf = '',
@@ -227,7 +233,13 @@ var get = exports.get = function(options, callback) {
   }
   
 
-
+  // a tool that checks if a reply is invalid then uses a fallback reply from an answer index.
+  // @function check_reply
+  // @param {int} index - the index of the answer array to compare against
+  // @param {int} curr_key - recursive cycle placeholder
+  // @param {String} fallback - what is compared against reply
+  // @param {String} reply - user input
+  // @return {String} - the fallback answer
   var check_reply = function(index, curr_key, fallback, reply) {
     var answer = guess_type(reply);
     var return_answer = (typeof answer != 'undefined') ? answer : fallback;
@@ -239,6 +251,10 @@ var get = exports.get = function(options, callback) {
   }
   
  
+  // a tool that checks if a set of conditions are met in comparison to the array answers.
+  // @function dependencies_met
+  // @param {String[]} conds - the set of conditions
+  // @return {boolen} - if they are met or not
   var dependencies_met = function(conds) {
     for (var key in conds) {
       var cond = conds[key];
@@ -258,19 +274,27 @@ var get = exports.get = function(options, callback) {
   }
   
  
-  
-
+  // a tool moves an index over to the next question for the user to see
+  // @function next_question
+  // @param {int} index - the index of the next question
+  // @param {int} prev_key - the index of the previous question key
+  // @param {String} answer - the user input
+  // @return {next_question(int, int, null)} - recursive call
+  // @return {done()} - exits the loop
   var next_question = function(index, prev_key, answer) {
     if (prev_key) answers[prev_key] = answer;
-
+    
+    //base case
     var curr_key = fields[index];
     if (!curr_key) return done();
-
+    
+    //recursive case
     if (options[curr_key].depends_on) {
       if (!dependencies_met(options[curr_key].depends_on))
         return next_question(++index, curr_key, undefined);
     }
-
+    
+    //building the response
     var prompt = (options[curr_key].type == 'confirm') ?
       ' - yes/no: ' : " - " + curr_key + ": ";
 
@@ -279,7 +303,8 @@ var get = exports.get = function(options, callback) {
       prompt += "[" + fallback + "] ";
 
     show_message(curr_key);
-
+    
+    //password exception
     if (options[curr_key].type == 'password') {
 
       var listener = stdin._events.keypress; // to reassign down later
@@ -292,7 +317,8 @@ var get = exports.get = function(options, callback) {
         stdin._events.keypress = listener; // reassign
         check_reply(index, curr_key, fallback, reply)
       });
-
+    
+    //otherwise establish these as the questions for readline
     } else {
 
       rl.question(prompt, function(reply) {
@@ -303,11 +329,11 @@ var get = exports.get = function(options, callback) {
 
   }
   
-
-
+  // builds the readline
   rl = get_interface(stdin, stdout);
   next_question(0);
-
+  
+  // cancellation condition
   rl.on('close', function() {
     close_prompt(); // just in case
 

@@ -1,3 +1,7 @@
+/*
+Establishes the required tools to interact with the program,
+and sets up that tool to be used elsewhere in the program.
+*/ 
 var reply = require('reply');
 
 var opts = {
@@ -30,6 +34,7 @@ var opts = {
     }
   }
 }
+
 
 function get_country(answers) {
   // answers contains the values given up to this point.

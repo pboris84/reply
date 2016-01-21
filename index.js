@@ -1,24 +1,40 @@
+
+/*
+Establishes the required tools to interact with the program,
+and sets up that tool to be used elsewhere in the program.
+*/ 
 var rl, readline = require('readline');
 
+/*
+Builds a tool for the user to interact with the program, first by checking
+if the required tools are there, and if they are, to use standard input and
+output tools. Then it stores that interaction tool for later use.
 
-
-
+@function get_interface
+@param {Object} stdin - Standard in stream
+@param {Object} stdout - Standard out stream
+@returns {Object} - readline interface
+*/
 var get_interface = function(stdin, stdout) {
-  if (!rl) rl = readline.createInterface(stdin, stdout);
-  else stdin.resume(); // interface exists
+  if (!rl) rl = readline.createInterface(stdin, stdout); //builds interface if it doesn't exist
+  else stdin.resume(); 
   return rl;
 }
 
+/*
+Builds a tool that can referenced by other programs, it is meant as a confirmation
+of whatever the user wants. 
 
-
-
-
-
-
-
-
+@function confirm
+@param {String} message - Preset message
+@exports the confirm @module
+@callback waits on user response
+    @param {String} answer
+    @param error
+*/
 var confirm = exports.confirm = function(message, callback) {
-
+    
+  // sets up the options for the get method
   var question = {
     'reply': {
       type: 'confirm',
@@ -26,7 +42,9 @@ var confirm = exports.confirm = function(message, callback) {
       default: 'yes'
     }
   }
-
+  
+  // waits for user responses and callbacks if that
+  // response exists 
   get(question, function(err, answer) {
     if (err) return callback(err);
     callback(null, answer.reply === true || answer.reply == 'yes');
@@ -35,15 +53,20 @@ var confirm = exports.confirm = function(message, callback) {
 };
 
 
+/*
 
+FINISH FINISH  FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH
 
-
-
-
-
-
-
-
+@function get
+@param {Object} options - the series of questions or interactions for the user
+@exports the get @module
+@callback waits on user response    FINISH FINISH  FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH FINISH
+    @param {String} answer
+    @param error
+@returns 
+    {null} - if no callback occurs
+    {error} - if no object in options
+*/
 var get = exports.get = function(options, callback) {
 
   if (!callback) return; // no point in continuing
@@ -56,10 +79,17 @@ var get = exports.get = function(options, callback) {
       stdout = process.stdout,
       fields = Object.keys(options);
 
+
+
   var done = function() {
     close_prompt();
     callback(null, answers);
   }
+  
+  
+  
+  
+  
 
   var close_prompt = function() {
     stdin.pause();
@@ -67,6 +97,12 @@ var get = exports.get = function(options, callback) {
     rl.close();
     rl = null;
   }
+  
+  
+  
+  
+  
+  
 
   var get_default = function(key, partial_answers) {
     if (typeof options[key] == 'object')
@@ -74,6 +110,14 @@ var get = exports.get = function(options, callback) {
     else
       return options[key];
   }
+  
+  
+  
+  
+  
+  
+  
+  
 
   var guess_type = function(reply) {
 
@@ -88,6 +132,13 @@ var get = exports.get = function(options, callback) {
 
     return reply;
   }
+  
+  
+  
+  
+  
+  
+  
 
   var validate = function(key, answer) {
 
@@ -105,6 +156,15 @@ var get = exports.get = function(options, callback) {
     return true;
 
   }
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
   var show_error = function(key) {
     var str = options[key].error ? options[key].error : 'Invalid value.';
@@ -112,8 +172,17 @@ var get = exports.get = function(options, callback) {
     if (options[key].options)
         str += ' (options are ' + options[key].options.join(', ') + ')';
 
-    stdout.write("\033[31m" + str + "\033[0m" + "\n");
+    stdout.write("\0x33[31m" + str + "\0x33[0m" + "\n");
   }
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
   var show_message = function(key) {
     var msg = '';
@@ -124,8 +193,13 @@ var get = exports.get = function(options, callback) {
     if (options[key].options)
       msg += '(options are ' + options[key].options.join(', ') + ')';
 
-    if (msg != '') stdout.write("\033[1m" + msg + "\033[0m\n");
+    if (msg != '') stdout.write("\0x33[1m" + msg + "\0x33[0m\n");
   }
+  
+  
+  
+  
+  
 
   // taken from commander lib
   var wait_for_password = function(prompt, callback) {
@@ -149,7 +223,7 @@ var get = exports.get = function(options, callback) {
         buf = buf.substr(0, buf.length-1);
         var masked = '';
         for (i = 0; i < buf.length; i++) { masked += mask; }
-        stdout.write('\r\033[2K' + prompt + masked);
+        stdout.write('\r\0x33[2K' + prompt + masked);
       } else {
         stdout.write(mask);
         buf += c;
@@ -159,6 +233,17 @@ var get = exports.get = function(options, callback) {
 
     stdin.on('keypress', keypress_callback);
   }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
   var check_reply = function(index, curr_key, fallback, reply) {
     var answer = guess_type(reply);
@@ -169,6 +254,17 @@ var get = exports.get = function(options, callback) {
     else
       show_error(curr_key) || next_question(index); // repeats current
   }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
   var dependencies_met = function(conds) {
     for (var key in conds) {
@@ -187,6 +283,18 @@ var get = exports.get = function(options, callback) {
 
     return true;
   }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
   var next_question = function(index, prev_key, answer) {
     if (prev_key) answers[prev_key] = answer;
@@ -230,6 +338,16 @@ var get = exports.get = function(options, callback) {
     }
 
   }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
   rl = get_interface(stdin, stdout);
   next_question(0);
